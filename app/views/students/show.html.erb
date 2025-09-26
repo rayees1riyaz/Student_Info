@@ -1,0 +1,21 @@
+<h1>Student Details</h1>
+
+<p><strong>Name:</strong> <%= @student.name %></p>
+<p><strong>Phone Number:</strong> <%= @student.phone_number %></p>
+<p><strong>Date of Birth:</strong> <%= @student.dob %></p>
+
+<h2>Admissions</h2>
+<% if @student.admission%>
+
+
+<p>Admission ID <%=@student.admission.id%></p>
+<p> Course <%=@student.admission.course.name%></p>
+<p>Fee <%=@student.admission.fee%></p>
+<p>Date of Joining <%=@student.admission.date_of_joining%></p>
+<% else %>
+  <p>No admissions found for this student.</p>
+<% end %>
+
+<br>
+
+<%= link_to "Back to Home page", index_path %> 

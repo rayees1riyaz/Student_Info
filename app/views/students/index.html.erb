@@ -1,0 +1,143 @@
+<div class="logout-container">
+  <%= button_to "Logout", logout_path, method: :delete, class: "btn-logout" %>
+</div>
+
+<h1 style="text-align: center; margin-bottom: 20px; color: #333; font-family: Arial, sans-serif;">All Students</h1>
+
+<div class="table-container">
+  <table class="students-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone Number</th>
+        <th>Date of Birth</th>
+        <th>Admission Course</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td data-label="ID"><%= student.id %></td>
+          <td data-label="Name"><%= student.name %></td>
+          <td data-label="Phone"><%= student.phone_number %></td>
+          <td data-label="DOB"><%= student.dob %></td>
+          <td data-label="Course">
+            <% if student.admission.present? %>
+              <%= student.admission.course.name %>
+            <% else %>
+              Not admitted
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="back-button">
+  <%= link_to "⬅ Back to Applications", applications_path, class: "btn-back" %>
+</div>
+
+<style>
+   .logout-container {
+    text-align: right;
+    margin: 10px 20px 20px 20px;
+  }
+
+  .btn-logout {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-logout:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+  .table-container {
+    width: 100%;
+    overflow-x: auto; 
+    margin-bottom: 20px;
+  }
+
+  .students-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+  }
+
+  .students-table thead {
+    background: linear-gradient(to right, #4e73df, #1cc88a);
+    color: #fff;
+  }
+
+  .students-table th, .students-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .students-table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: 0.3s;
+  }
+
+  .btn-back {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .btn-back:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+  }
+
+  .back-button {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+ 
+  @media (max-width: 768px) {
+    .students-table, .students-table thead, .students-table tbody, .students-table th, .students-table td, .students-table tr {
+      display: block;
+    }
+
+    .students-table thead tr {
+      display: none;
+    }
+
+    .students-table tbody tr {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+
+    .students-table tbody td {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border: none;
+    }
+
+    .students-table tbody td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #555;
+    }
+  }
+</style>

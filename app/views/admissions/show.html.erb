@@ -1,0 +1,49 @@
+<% if @admission.student %>
+  <div style="max-width: 900px; margin: 50px auto; font-family: 'Arial', sans-serif; display: flex; flex-direction: column; gap: 30px;">
+
+    <!-- Student Details Card -->
+    <div style="background: linear-gradient(135deg, #e0f7ff, #ffffff); padding: 30px 35px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease;"
+         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 18px 40px rgba(0,0,0,0.2)';"
+         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.15)';">
+      <h2 style="font-size: 26px; color: #007bff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+        👤 Student Details
+      </h2>
+      
+      <p style="margin-bottom: 10px;"><strong>Name:</strong> <span style="color:#343a40;"><%= @admission.student.name %></span></p>
+      <p style="margin-bottom: 10px;"><strong>Phone Number:</strong> <span style="color:#343a40;"><%= @admission.student.phone_number %></span></p>
+      <p style="margin-bottom: 10px;"><strong>Date of Birth:</strong> <span style="color:#343a40;"><%= @admission.student.dob.strftime("%d %b %Y") %></span></p>
+      <p style="margin-bottom: 10px;"><strong>Student ID:</strong> <span style="color:#343a40;"><%= @admission.student.student_number %></span></p>
+      <p style="margin-bottom: 0;"><strong>Course ID:</strong> <span style="color:#343a40;"><%= @admission.course.id %></span></p>
+    </div>
+
+    <!-- Admission Details Card -->
+    <div style="background: linear-gradient(135deg, #fff4e6, #ffffff); padding: 30px 35px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease;"
+         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 18px 40px rgba(0,0,0,0.2)';"
+         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.15)';">
+      <h2 style="font-size: 26px; color: #ff7f50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+        🏫 Admission Details
+      </h2>
+      
+      <p style="margin-bottom: 10px;"><strong>Admission ID:</strong> <span style="color:#343a40;"><%= @admission.admission_number %></span></p>
+      <p style="margin-bottom: 10px;"><strong>Course:</strong> <span style="color:#343a40;"><%= @admission.course.name %></span></p>
+      <p style="margin-bottom: 10px;"><strong>Fee:</strong> <span style="color:#343a40;"><%= number_to_currency(@admission.fee, unit: "₹") %></span></p>
+      <p style="margin-bottom: 0;"><strong>Date of Joining:</strong> <span style="color:#343a40;"><%= @admission.date_of_joining.strftime("%d %b %Y") %></span></p>
+    </div>
+
+    <!-- Back Button -->
+    <div style="text-align: center; margin-top: 15px;">
+  <% path = current_user ? index_path : root_path %>
+  <%= link_to "⬅ Back to Home Page", path,
+        style: "display: inline-block; padding: 10px 18px; background-color: #6c757d; color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold; transition: all 0.3s ease;",
+        onmouseover: "this.style.backgroundColor='#5a6268'; this.style.transform='scale(1.03)';",
+        onmouseout: "this.style.backgroundColor='#6c757d'; this.style.transform='scale(1)';" %>
+</div>
+
+  </div>
+</div>
+
+
+  </div>
+<% else %>
+  <p style="text-align: center; font-size: 16px; color: #856404;">Admission not found.</p>
+<% end %>

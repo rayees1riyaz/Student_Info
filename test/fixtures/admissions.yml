@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  student: one
+  course: one
+  fee: 9.99
+  date_of_joining: 2025-09-22
+
+two:
+  student: two
+  course: two
+  fee: 9.99
+  date_of_joining: 2025-09-22

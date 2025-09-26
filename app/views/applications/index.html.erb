@@ -1,0 +1,202 @@
+<div class="logout-container">
+  <%= button_to "Logout", logout_path, method: :delete, class: "btn-logout" %>
+</div>
+
+<h1 style="text-align: center; margin-bottom: 20px; color: #333; font-family: Arial, sans-serif;">All Applications</h1>
+
+
+<div class="table-container">
+  <table class="applications-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Course</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @applications.each do |app| %>
+        <tr>
+          <td data-label="ID"><%= app.id %></td>
+          <td data-label="Name"><%= app.name %></td>
+          <td data-label="Phone"><%= app.phone_number %></td>
+          <td data-label="Course"><%= app.course.name %></td>
+          <td data-label="Status">
+            <span style="padding: 4px 8px; border-radius: 5px;
+                         background-color: <%= app.status == 'approved' ? '#28a745' : app.status == 'pending' ? '#ffc107' : '#dc3545' %>;
+                         color: #fff; font-weight: bold;">
+              <%= app.status.capitalize %>
+            </span>
+          </td>
+          <td data-label="Actions">
+            <% if app.status == "pending" %>
+              <%= button_to "Approve", approve_application_path(app), method: :patch, class: "btn-approve" %>
+              <%= button_to "Reject", reject_application_path(app), method: :patch, data: { confirm: "Are you sure?" }, class: "btn-reject" %>
+            <% else %>
+              <em style="color: #6c757d;">N/A</em>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-actions">
+  <%# <%= link_to "⬅ Back to Dashboard", applications_path, class: "btn-back" %> 
+  <%= link_to "See All Students", students_path, class: "btn-back", style: "margin-left: 15px;" %>
+</div>
+
+<style>
+  
+  .logout-container {
+    text-align: right;
+    margin: 10px 20px 20px 20px;
+  }
+
+  .btn-logout {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-logout:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 20px;
+  }
+
+  .applications-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+  }
+
+  .applications-table thead {
+    background: linear-gradient(to right, #4e73df, #1cc88a);
+    color: #fff;
+  }
+
+  .applications-table th, .applications-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .applications-table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: 0.3s;
+  }
+
+  .btn-approve {
+    padding: 6px 12px;
+    margin-right: 5px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-approve:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+  }
+
+  .btn-reject {
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-reject:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+  }
+
+  .btn-back {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #6c757d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .btn-back:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+  }
+
+  .table-actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+
+  @media (max-width: 768px) {
+    .applications-table, .applications-table thead, .applications-table tbody, .applications-table th, .applications-table td, .applications-table tr {
+      display: block;
+    }
+
+    .applications-table thead tr {
+      display: none; 
+    }
+
+    .applications-table tbody tr {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+
+    .applications-table tbody td {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border: none;
+    }
+
+    .applications-table tbody td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #555;
+    }
+
+    
+    .table-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .table-actions .btn-back {
+      margin-left: 0 !important; 
+    }
+  }
+</style>

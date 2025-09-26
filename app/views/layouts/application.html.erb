@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KuposTask</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <style>
+      .flash-message {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 25px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        opacity: 0.95;
+        z-index: 9999;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 250px;
+      }
+
+      .flash-message.notice {
+        background-color: #27ae60; /* green */
+      }
+
+      .flash-message.alert {
+        background-color: #e74c3c; /* red */
+      }
+
+      .flash-close {
+        cursor: pointer;
+        margin-left: 15px;
+        font-weight: bold;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <% flash.each do |key, message| %>
+      <div class="flash-message <%= key %>">
+        <span><%= message %></span>
+        <span class="flash-close" onclick="this.parentElement.remove()">&times;</span>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>

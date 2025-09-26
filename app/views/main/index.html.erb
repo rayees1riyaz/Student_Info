@@ -1,0 +1,134 @@
+<div style="min-height: 100vh; background: linear-gradient(135deg, #f0f8ff, #d9e6ff); padding: 30px 15px; font-family: 'Arial', sans-serif; display: flex; justify-content: center;">
+
+  <div style="display: flex; flex-wrap: wrap; max-width: 1200px; width: 100%; gap: 30px; align-items: flex-start;">
+
+    <!-- Profile Card -->
+    <div style="flex: 1 1 280px; max-width: 350px; background: #fff; border-radius: 20px; box-shadow: 0 12px 28px rgba(0,0,0,0.15); overflow: hidden;">
+
+      <!-- Profile Header -->
+      <div style="background: linear-gradient(135deg, #6a11cb, #2575fc); padding: 20px; text-align: center; color: #fff;">
+        <h2 style="margin: 0; font-size: 20px; font-weight: bold;"><%= current_user.name %></h2>
+      </div>
+
+      <!-- Profile Details -->
+      <div style="padding: 20px; font-size: 14px; color: #495057;">
+        <p><strong>Name:</strong> <%= current_user.name %></p>
+        <p><strong>Email:</strong> <%= current_user.email %></p>
+        <p><strong>DOB:</strong> <%= current_user.dob.strftime("%d %b %Y") %></p>
+        <p><strong>Registration Number:</strong> <%= current_user.registration_number %></p>
+
+        <% user_application = current_user.applications.order(created_at: :desc).first %>
+        <% if user_application&.status == "approved" %>
+          <% student = Student.find_by(name: user_application.name, dob: user_application.dob) %>
+          <% admission = Admission.find_by(student_id: student.id, course_id: user_application.course_id) %>
+
+          <% if student %>
+            <p><strong>Student Number:</strong> <%= student.student_number %></p>
+          <% end %>
+
+          <% if admission %>
+            <p><strong>Admission Number:</strong> <%= admission.admission_number %></p>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- Logout Button -->
+      <div style="padding: 0 20px 20px 20px; text-align: center;">
+  <%= button_to "Logout", logout_path, method: :delete, 
+        data: { confirm: "Are you sure you want to logout?" },
+        style: "width: 100%; padding: 12px 0; background: linear-gradient(to right, #dc3545, #ff6666); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); transition: all 0.3s ease;",
+        onmouseover: "this.style.transform='scale(1.03)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.25)';",
+        onmouseout: "this.style.transform='scale(1)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)';" %>
+</div>
+
+    </div> <!-- End Profile Card -->
+
+    <!-- Left/Main Content -->
+    <div style="flex: 2 1 600px; display: flex; flex-direction: column; gap: 30px;">
+
+      <!-- College Header -->
+      <div style="text-align: center;">
+        <h1 style="font-size: 36px; color: #343a40; margin-bottom: 10px; text-shadow: 1px 1px #a0b0c0;">🏛️ Kashmir University</h1>
+        <h3 style="font-size: 20px; color: #495057; margin-bottom: 10px;">Excellence in Education & Research</h3>
+        <p style="font-size: 15px; color: #6c757d; max-width: 700px; margin: 0 auto;">Stay updated with the latest college notices, events, and important announcements</p>
+        <hr style="margin-top: 20px; border: 0; height: 3px; background: linear-gradient(to right, #007bff, #17a2b8); border-radius: 5px;">
+      </div>
+
+      <!-- Action Buttons / Status -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; justify-content: center;">
+        <% if user_application.nil? %>
+          <!-- No application yet -->
+          <%= link_to "Apply For Admission", new_application_path,
+              style: "display: block; text-align: center; padding: 16px; background: linear-gradient(to right, #28a745, #5cd65c); color: #fff; border-radius: 14px; font-weight: bold; text-decoration: none; box-shadow: 0 8px 25px rgba(0,0,0,0.2); font-size: 15px; transition: all 0.4s ease;",
+              onmouseover: "this.style.transform='scale(1.07)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.25)';",
+              onmouseout: "this.style.transform='scale(1)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.2)';" %>
+
+        <% elsif user_application.status == "pending" %>
+          <!-- Pending -->
+          <div style="padding: 20px; background: linear-gradient(to right, #fff3cd, #ffeeba); border-radius: 14px; text-align: center; font-weight: bold; font-size: 16px; color: #856404; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+            ⚠️ Your application is currently pending. Please wait for approval.
+          </div>
+
+        <% elsif user_application.status == "approved" %>
+          <!-- Approved -->
+          <% action_buttons = [
+            { text: "See Your Details", path: admissions_search_path, gradient: "linear-gradient(to right, #007bff, #3399ff)" },
+            { text: "See Course Details", path: courses_search_path, gradient: "linear-gradient(to right, #17a2b8, #5bc0de)" },
+            { text: "See Your Result", path: results_search_path, gradient: "linear-gradient(to right, #6c757d, #adb5bd)" }
+          ] %>
+
+          <% action_buttons.each do |btn| %>
+            <%= link_to btn[:text], btn[:path],
+              style: "display: block; text-align: center; padding: 16px; background: #{btn[:gradient]}; color: #fff; border-radius: 14px; font-weight: bold; text-decoration: none; box-shadow: 0 8px 25px rgba(0,0,0,0.2); font-size: 15px; transition: all 0.4s ease;",
+              onmouseover: "this.style.transform='scale(1.07)'; this.style.boxShadow='0 12px 35px rgba(0,0,0,0.25)';",
+              onmouseout: "this.style.transform='scale(1)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.2)';" %>
+          <% end %>
+
+        <% elsif user_application.status == "rejected" %>
+          <!-- Rejected -->
+          <div style="padding: 20px; background: linear-gradient(to right, #f8d7da, #f5c6cb); border-radius: 14px; text-align: center; font-weight: bold; font-size: 16px; color: #721c24; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+            ❌ Your application has been rejected.
+          </div>
+
+        <% end %>
+      </div>
+
+      <!-- College Notices -->
+      <div>
+        <h2 style="text-align: center; font-size: 26px; color: #343a40; margin-bottom: 30px;">📢 University Notices</h2>
+
+        <% @notifications = Notification.order(created_at: :desc) %>
+        <% if @notifications.any? %>
+          <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+            <% @notifications.each do |notice| %>
+              <li style="background: linear-gradient(to right, #e6f7ff, #d9ebff); padding: 20px; border-radius: 18px; border-left: 6px solid #007bff; box-shadow: 0 8px 22px rgba(0,0,0,0.12); transition: all 0.4s ease;"
+                  onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.2)';" 
+                  onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 22px rgba(0,0,0,0.12)';">
+                <strong style="font-size: 18px; color: #007bff; display: block; margin-bottom: 10px;"> <%= notice.title %> </strong>
+                <p style="margin: 0 0 10px 0; font-size: 15px; color: #495057;"> <%= notice.body %> </p>
+                <small style="color: #6c757d; font-size: 13px;"> <%= notice.created_at.strftime("%d %b %Y, %I:%M %p") %> </small>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p style="text-align: center; color: #856404; font-size: 15px;">No notices at the moment. Stay tuned!</p>
+        <% end %>
+      </div>
+    </div> <!-- End Main Content -->
+
+  </div>
+</div>
+
+<!-- Responsive Tweaks -->
+<style>
+@media (max-width: 768px) {
+  h1 { font-size: 28px !important; }
+  h3 { font-size: 18px !important; }
+  .profile-card { max-width: 100% !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 22px !important; }
+  h3 { font-size: 16px !important; }
+  p, strong, small { font-size: 13px !important; }
+}
+</style>

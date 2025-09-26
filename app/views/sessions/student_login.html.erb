@@ -1,0 +1,47 @@
+<div style="min-height: 100vh; display: flex; justify-content: center; align-items: center; 
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2); padding: 20px;">
+
+  <div style="width: 100%; max-width: 380px; background: #ffffff; border-radius: 20px; 
+              padding: 30px 25px; box-shadow: 0 12px 28px rgba(0,0,0,0.15); transition: all 0.3s ease;">
+
+    <h2 style="color: #343a40; text-align: center; margin-bottom: 25px; letter-spacing: 1px; font-family: 'Arial', sans-serif;">
+      Student Login
+    </h2>
+
+    <%= form_with url: student_login_path, local: true do |f| %>
+
+    
+
+      <div style="margin-bottom: 18px;">
+        <%= label_tag :registration_number, "Registration Number", style: "font-weight: 600; display: block; margin-bottom: 6px; color: #495057;" %>
+        <%= text_field_tag :registration_number, nil, placeholder: "Enter Registration No.", 
+              style: "width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; box-sizing: border-box;" %>
+      </div>
+
+      <div style="margin-bottom: 22px;">
+        <%= label_tag :password, "Password", style: "font-weight: 600; display: block; margin-bottom: 6px; color: #495057;" %>
+        <%= password_field_tag :password, nil, placeholder: "Enter Password", 
+              style: "width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 10px; font-size: 14px; outline: none; transition: all 0.2s; box-sizing: border-box;" %>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <%= submit_tag "Login", 
+              style: "width: 100%; padding: 12px; background: linear-gradient(to right, #17a2b8, #138496); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 15px; transition: all 0.3s ease;", 
+              onmouseover: "this.style.background='linear-gradient(to right, #138496, #117a8b)'; this.style.transform='scale(1.03)';",
+              onmouseout: "this.style.background='linear-gradient(to right, #17a2b8, #138496)'; this.style.transform='scale(1)';" %>
+      </div>
+
+    <% end %>
+
+    <div style="text-align: center; font-size: 14px; color: #6c757d;">
+      Don't have an account? 
+      <%= link_to "Sign up", signup_path, style: "color: #007bff; font-weight: bold; text-decoration: none;",
+            onmouseover: "this.style.textDecoration='underline';", onmouseout: "this.style.textDecoration='none';" %>
+    </div>
+ <div style="text-align: center; margin-top: 10px;">
+        <%= link_to "⬅ Back to Home Page", root_path, style: "display: inline-block; padding: 10px 18px; background-color: #6c757d; color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold; transition: all 0.3s ease;",
+              onmouseover: "this.style.backgroundColor='#5a6268'; this.style.transform='scale(1.03)';",
+              onmouseout: "this.style.backgroundColor='#6c757d'; this.style.transform='scale(1)';" %>
+      </div>
+  </div>
+</div>
