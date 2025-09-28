@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  root 'main#main'   # Landing page for everyone
+  root 'main#main'
 
-  get "/index", to: "main#index"  # Student dashboard
+  get "/index", to: "main#index" 
 
   get "admissions/search", to: "admissions#search"
   post "admissions/search_by_id", to:"admissions#search_by_id"
@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   resources :admissions, only: [:show] 
   resources :courses, only: [:show] 
   resources :results, only: [:show] 
+resources :notifications
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

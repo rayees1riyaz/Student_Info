@@ -1,9 +1,19 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: [:show, :approve, :reject]
-  before_action :require_student_login, only: [:new, :create]
+
+  before_action :require_login
+
+  before_action :set_application, only: [:show, :approve, :reject, :destroy]
+
+  before_action :require_student, only: [:new, :create]
+
+  before_action :require_admin, only: [:approve, :reject, :destroy]
 
   def index
-    @applications = Application.all
+    if current_user.admin?
+      @applications = Application.all
+    else
+      @applications = current_user.applications
+    end
   end
 
   def new
@@ -15,6 +25,7 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  # Create a new application
   def create
     if current_user.applications.exists?
       redirect_to applications_path, alert: "You have already applied!"
@@ -25,28 +36,31 @@ class ApplicationsController < ApplicationController
     @courses = Course.all 
 
     if @application.save
-      redirect_to index_path, notice: "Application submitted successfully! Your Application Number is #{@application.application_number}"
+      redirect_to applications_path, notice: "Application submitted! Your Application Number: #{@application.application_number}"
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
+  # Approve an application
   def approve
     @application.update(status: "approved")
 
+    # Create student record
     student = Student.create(
       name: @application.name,
       phone_number: @application.phone_number,
       dob: @application.dob,
-      application_id: @application.id   
+      application_id: @application.id
     )
 
-    admission = Admission.create(
+ 
+    Admission.create(
       student_id: student.id,
       course_id: @application.course_id,
       fee: rand(10000..30000),
       date_of_joining: Time.current,
-      application_id: @application.id  
+      application_id: @application.id
     )
 
     redirect_to applications_path, notice: "Application approved!"
@@ -57,22 +71,15 @@ class ApplicationsController < ApplicationController
     redirect_to applications_path, notice: "Application rejected!"
   end
 
+
+  def destroy
+    @application.destroy
+    redirect_to applications_path, notice: "Application deleted!"
+  end
+
   def show
-   
     @student = Student.find_by(application_id: @application.id)
     @admission = Admission.find_by(student_id: @student&.id, course_id: @application.course_id)
-  end
-
-  def search
-  end
-
-  def search_by_id
-    @application = Application.find_by(application_number: params[:application_number])
-    if @application
-      redirect_to application_path(@application), notice: "Application found!"
-    else
-      redirect_to applications_search_path, alert: "Application not found"
-    end
   end
 
   private
@@ -81,13 +88,28 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
   end
 
+
   def application_params
     params.require(:application).permit(:name, :phone_number, :dob, :course_id)
   end
 
-  def require_student_login
-    unless current_user.present?
-      redirect_to student_login_path, alert: "You must login first to apply for admission."
+  def require_login
+    unless current_user
+      redirect_to student_login_path, alert: "You must log in first!"
+    end
+  end
+
+
+  def require_student
+    unless current_user && !current_user.admin?
+      redirect_to root_path, alert: "Only students can apply!"
+    end
+  end
+
+
+  def require_admin
+    unless current_user && current_user.admin?
+      redirect_to root_path, alert: "Only admins can perform this action!"
     end
   end
 end

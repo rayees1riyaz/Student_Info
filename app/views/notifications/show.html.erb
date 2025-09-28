@@ -1,0 +1,8 @@
+<h2><%= @notification.title %></h2>
+
+<p><%= @notification.body %></p>
+<p><strong>User ID:</strong> <%= @notification.user_id %></p>
+<p><strong>Created At:</strong> <%= @notification.created_at.strftime("%d-%m-%Y %H:%M") %></p>
+
+<%= link_to "Edit", edit_notification_path(@notification) %> |
+<%= link_to "Back", notifications_path %>

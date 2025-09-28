@@ -1,0 +1,27 @@
+<div style="max-width: 600px; margin: 50px auto; background-color: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+
+  <h2 style="text-align: center; font-size: 28px; color: #343a40; font-weight: 700; margin-bottom: 25px;">
+    Edit Notification
+  </h2>
+
+  <%= form_with(model: @notification, local: true) do |form| %>
+    <div style="margin-bottom: 20px;">
+      <%= form.label :title, "Title", style: "display: block; font-weight: 600; margin-bottom: 5px; color: #495057;" %>
+      <%= form.text_field :title, style: "width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px;" %>
+    </div>
+
+    <div style="margin-bottom: 25px;">
+      <%= form.label :body, "Body", style: "display: block; font-weight: 600; margin-bottom: 5px; color: #495057;" %>
+      <%= form.text_area :body, rows: 6, style: "width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; resize: vertical;" %>
+    </div>
+
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <%= form.submit "Update Notification", 
+          style: "flex: 1; padding: 10px 0; background-color: #007bff; color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease;" %>
+
+      <%= link_to "Back", notifications_path, 
+          style: "flex: 1; text-align: center; padding: 10px 0; background-color: #6c757d; color: #fff; font-weight: 600; border-radius: 6px; text-decoration: none; transition: background-color 0.2s ease;" %>
+    </div>
+  <% end %>
+
+</div>

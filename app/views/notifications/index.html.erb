@@ -1,0 +1,89 @@
+<div class="notices-container" style="max-width: 1000px; margin: 40px auto; padding: 30px; background-color: #f5f6fa; border-radius: 15px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+    <div>
+      <h2 style="font-size: 32px; color: #222; font-weight: 700; margin-bottom: 5px;">University Notices</h2>
+      <p style="font-size: 15px; color: #555; max-width: 700px;">Stay updated with the latest notices, events, and important announcements</p>
+    </div>
+
+ 
+    <%= link_to "➕ New Notification", new_notification_path, 
+        style: "
+          padding: 8px 18px;
+          background-color: #0d6efd;
+          color: #fff;
+          font-weight: 600;
+          border-radius: 6px;
+          text-decoration: none;
+          box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+          transition: all 0.2s ease;
+          font-size: 14px;
+        ",
+        onmouseover: "this.style.backgroundColor='#0b5ed7'; this.style.transform='translateY(-1px)';",
+        onmouseout: "this.style.backgroundColor='#0d6efd'; this.style.transform='translateY(0)';" %>
+  </div>
+
+  <!-- Notifications List -->
+  <% @notifications = Notification.order(created_at: :desc) %>
+  <% if @notifications.any? %>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+      <% @notifications.each do |notice| %>
+        <div style="
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #ffc107;
+          "
+          onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.12)';"
+          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.08)';"
+        >
+
+        
+          <strong style="font-size: 17px; color: #222; display: block; margin-bottom: 8px;"><%= notice.title %></strong>
+
+     
+          <p style="font-size: 14px; color: #555; margin-bottom: 12px; line-height: 1.5;"><%= notice.body %></p>
+
+    
+          <small style="color: #999; font-size: 12px; display: block; margin-bottom: 12px;">
+            <%= notice.created_at.strftime("%d %b %Y, %I:%M %p") %>
+          </small>
+
+          <!-- Action Buttons -->
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <%= link_to "✏️ Edit", edit_notification_path(notice), 
+                style: "flex: 1; text-align: center; padding: 6px 0; background-color: #0d6efd; color: #fff; font-weight: 600; border-radius: 6px; font-size: 13px; text-decoration: none; transition: all 0.2s ease; cursor: pointer;" %>
+
+            <%= button_to "🗑️ Delete", notification_path(notice), method: :delete, 
+                data: { confirm: "Are you sure you want to delete this notification?" },
+                style: "flex: 1; text-align: center; padding: 6px 0; background-color: #dc3545; color: #fff; font-weight: 600; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; transition: all 0.2s ease;" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p style="text-align: center; color: #6c757d; font-size: 14px; margin-top: 40px;">No notices at the moment. Stay tuned!</p>
+  <% end %>
+
+</div>
+
+
+<div style="text-align: center; margin-top: 30px;">
+  <%= link_to "⬅ Back to Applications", applications_path, 
+      style: "
+        padding: 10px 22px;
+        background-color: #6c757d;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 6px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      ",
+      onmouseover: "this.style.backgroundColor='#5a6268'; this.style.transform='scale(1.05)';",
+      onmouseout: "this.style.backgroundColor='#6c757d'; this.style.transform='scale(1)';" %>
+</div>
