@@ -6,10 +6,9 @@ class ApplicationsController < ApplicationController
     @applications = Application.all
   end
 
-
   def new
     if current_user.applications.exists?
-      redirect_to applications_path, alert: " You have already applied!"
+      redirect_to applications_path, alert: "You have already applied!"
     else
       @application = Application.new
       @courses = Course.all
@@ -18,7 +17,7 @@ class ApplicationsController < ApplicationController
 
   def create
     if current_user.applications.exists?
-      redirect_to applications_path, alert: " You have already applied!"
+      redirect_to applications_path, alert: "You have already applied!"
       return
     end
 
@@ -32,39 +31,37 @@ class ApplicationsController < ApplicationController
     end
   end
 
- 
   def approve
     @application.update(status: "approved")
 
-  student = Student.create(
-  name: @application.name,
-  phone_number: @application.phone_number,
-  dob: @application.dob,
-
-  )
+    student = Student.create(
+      name: @application.name,
+      phone_number: @application.phone_number,
+      dob: @application.dob,
+      application_id: @application.id   
+    )
 
     admission = Admission.create(
       student_id: student.id,
       course_id: @application.course_id,
       fee: rand(10000..30000),
-      date_of_joining: Time.current
+      date_of_joining: Time.current,
+      application_id: @application.id  
     )
 
     redirect_to applications_path, notice: "Application approved!"
   end
 
- 
   def reject
     @application.update(status: "rejected")
     redirect_to applications_path, notice: "Application rejected!"
   end
 
-
   def show
-    @student = Student.find_by(user_id: @application.user_id)
+   
+    @student = Student.find_by(application_id: @application.id)
     @admission = Admission.find_by(student_id: @student&.id, course_id: @application.course_id)
   end
-
 
   def search
   end
@@ -90,7 +87,7 @@ class ApplicationsController < ApplicationController
 
   def require_student_login
     unless current_user.present?
-      redirect_to student_login_path, alert: " You must login first to apply for admission."
+      redirect_to student_login_path, alert: "You must login first to apply for admission."
     end
   end
 end

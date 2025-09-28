@@ -6,9 +6,13 @@
     <div style="flex: 1 1 280px; max-width: 350px; background: #fff; border-radius: 20px; box-shadow: 0 12px 28px rgba(0,0,0,0.15); overflow: hidden;">
 
       <!-- Profile Header -->
-      <div style="background: linear-gradient(135deg, #6a11cb, #2575fc); padding: 20px; text-align: center; color: #fff;">
-        <h2 style="margin: 0; font-size: 20px; font-weight: bold;"><%= current_user.name %></h2>
-      </div>
+     <div style="background: linear-gradient(135deg, #6a11cb, #2575fc); padding: 20px; text-align: center; color: #fff;">
+  <% if current_user %>
+    <h2 style="margin: 0; font-size: 20px; font-weight: bold;"><%= current_user.name %></h2>
+  <% else %>
+    <h2 style="margin: 0; font-size: 20px; font-weight: bold;">Guest</h2>
+  <% end %>
+</div>
 
       <!-- Profile Details -->
       <div style="padding: 20px; font-size: 14px; color: #495057;">

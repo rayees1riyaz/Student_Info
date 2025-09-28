@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   post "courses/search_by_id", to:"courses#search_by_id"
   get "results/search", to: "results#search"
   post "results/search_by_id", to:"results#search_by_id"
-  get "applications/search", to: "applications#search"
-  post "applications/search_by_id", to:"applications#search_by_id"
+  # get "applications/search", to: "applications#search"
+  # post "applications/search_by_id", to:"applications#search_by_id"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"

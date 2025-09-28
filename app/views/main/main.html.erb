@@ -1,7 +1,6 @@
 <!-- Header Section: Links + Quick Info + College Image -->
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px; max-width: 1000px; margin: 40px auto; background-color: #f0f4f8; padding: 30px; border-radius: 15px; box-shadow: 0 6px 18px rgba(0,0,0,0.1);">
 
-  <!-- Links on the Left -->
   <div style="display: flex; flex-direction: column; gap: 15px; flex: 1 1 180px; min-width: 200px;">
     <a href="<%= login_path %>" style="padding: 12px 18px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s ease;" 
        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';" 
@@ -12,8 +11,6 @@
        onmouseout="this.style.backgroundColor='#17a2b8'; this.style.transform='scale(1)';">Student Login</a>
   </div>
 
-
-  <!-- Quick Info / Stats in the Middle -->
   <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; flex: 2 1 300px; min-width: 250px; text-align: center;">
     <h2 style="font-size: 24px; color: #007bff; margin: 0;">Welcome to Kashmir University!</h2>
     <p style="font-size: 15px; color: #495057; margin: 0;">Empowering students through knowledge, innovation, and research.</p>
@@ -33,19 +30,17 @@
     </div>
   </div>
 
-  <!-- College Image -->
   <img src="https://pbs.twimg.com/profile_images/1643851279486291970/uN_qp4ON_400x400.jpg"
        alt="College Image"
        style="width: 200px; height: 200px; border-radius: 15px; object-fit: cover; border: 2px solid #007bff; flex: 1 1 200px;">
 </div>
- <!-- Action Buttons -->
+
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; justify-content: center; max-width: 1000px; margin: 40px auto;">
   <% action_buttons = [
     { text: "Apply For Admission", path: new_application_path, gradient: "linear-gradient(to right, #28a745, #5cd65c)", requires_login: true },
-    { text: "See Your Details", path: admissions_search_path, gradient: "linear-gradient(to right, #007bff, #3399ff)", requires_login: true},
-    { text: "See Course Details", path: courses_search_path, gradient: "linear-gradient(to right, #17a2b8, #5bc0de)", requires_login: true },
-    { text: "See Your Result", path: results_search_path, gradient: "linear-gradient(to right, #6c757d, #adb5bd)", requires_login: false },
-    { text: "See Your Application Status", path: applications_search_path, gradient: "linear-gradient(to right, #ffc107, #ffe066)", requires_login: false }
+    { text: "See Your Details", path: admissions_search_path, gradient: "linear-gradient(to right, #007bff, #3399ff)", requires_login:false},
+    { text: "See Course Details", path: courses_search_path, gradient: "linear-gradient(to right, #17a2b8, #5bc0de)", requires_login: false},
+    { text: "See Your Result", path: results_search_path, gradient: "linear-gradient(to right, #6c757d, #adb5bd)", requires_login: false }
   ] %>
 
   <% action_buttons.each do |btn| %>
@@ -57,23 +52,18 @@
   <% end %>
 </div>
 
-<!-- Admissions Available -->
 <div style="max-width: 1000px; margin: 40px auto; background-color: #f4f7ff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center;">
   <h2 style="font-size: 30px; color: #343a40; margin-bottom: 25px;">Admissions Available</h2>
 
-  <!-- Table Header -->
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; font-weight: bold; padding: 12px 0; border-bottom: 2px solid #cce0ff; background: #e6f0ff; border-radius: 10px;">
     <div style="text-align: center; color: #007bff;">Course</div>
     <div style="text-align: center; color: #007bff;">Duration</div>
-    <div style="text-align: center; color: #007bff;">Seats</div>
-    <div style="text-align: center; color: #007bff;">Action</div>
   </div>
 
-  <!-- Course Data -->
   <% available_courses = [
-    { name: "BCA", duration: "3 Years", seats: 60 },
-    { name: "MCA", duration: "4 Years", seats: 40 },
-    { name: "B-Tech", duration: "5 Years", seats: 120 }
+    { name: "BCA", duration: "3 Years" },
+    { name: "MCA", duration: "4 Years" },
+    { name: "B-Tech", duration: "5 Years" }
   ] %>
 
   <% available_courses.each do |course| %>
@@ -85,18 +75,10 @@
         <%= course[:name] %>
       </div>
       <div style="text-align: center; color: #6c757d;"><%= course[:duration] %></div>
-      <div style="text-align: center; color: #28a745; font-weight: bold;"><%= course[:seats] %></div>
-      <div style="text-align: center;">
-        <%= link_to "Apply", student_login_path, 
-            style: "padding: 8px 16px; background: linear-gradient(to right, #007bff, #00c6ff); color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease;",
-            onmouseover: "this.style.transform='scale(1.08)';",
-            onmouseout: "this.style.transform='scale(1)';" %>
-      </div>
     </div>
   <% end %>
 </div>
 
-<!-- College Notices -->
 <div style="max-width: 1000px; margin: 40px auto; background-color: #ffffff; padding: 25px; border-radius: 15px; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
   <div style="text-align: center; margin-bottom: 20px;">
     <h2 style="font-size: 28px; color: #343a40;"> University Notices</h2>
