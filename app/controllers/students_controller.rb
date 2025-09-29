@@ -1,4 +1,5 @@
 class StudentsController < ApplicationController
+  before_action :require_admin
   def index
     @students = Student.all
   end
@@ -39,5 +40,10 @@ class StudentsController < ApplicationController
 
   def student_params
     params.require(:student).permit(:name, :phone_number, :dob)
+  end
+   def require_admin
+    unless current_user && current_user.admin?
+      redirect_to root_path, alert: "Only admins can perform this action!"
+    end
   end
 end

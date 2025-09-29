@@ -1,5 +1,4 @@
 <div class="logout-container" style="display: flex; justify-content: flex-end; gap: 10px; margin: 10px 20px 20px 20px;">
-
   <%= link_to "See All College Notifications", notifications_path, 
       style: "
         padding: 10px 20px;
@@ -15,8 +14,8 @@
       onmouseout: "this.style.backgroundColor='#007bff'; this.style.transform='scale(1)';" %>
 
   <%= button_to "Logout", logout_path, method: :delete, class: "btn-logout" %>
-
 </div>
+
 <h1 class="page-title">All Applications</h1>
 
 <div class="table-container">
@@ -24,6 +23,7 @@
     <thead>
       <tr>
         <th>ID</th>
+        <th>Application Number</th> 
         <th>Name</th>
         <th>Phone</th>
         <th>Course</th>
@@ -35,6 +35,9 @@
       <% @applications.each do |app| %>
         <tr>
           <td data-label="ID"><%= app.id %></td>
+          <td data-label="Application Number">
+            <%= app.application_number.present? ? app.application_number : "Not Found" %>
+          </td>
           <td data-label="Name"><%= app.name %></td>
           <td data-label="Phone"><%= app.phone_number %></td>
           <td data-label="Course"><%= app.course.name %></td>
@@ -57,7 +60,6 @@
   </table>
 </div>
 
-
 <div style="text-align: center; margin: 20px 0;">
   <%= link_to "See All Students", students_path, 
       style: "
@@ -75,27 +77,13 @@
       onmouseout: "this.style.background='linear-gradient(45deg, #6c757d, #5a6268)'; this.style.transform='translateY(0)';" %>
 </div>
 
-
 <style>
-  .logout-container {
-    text-align: right;
-    margin: 10px 20px 20px 20px;
-  }
-  .btn-logout {
-    padding: 10px 20px;
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+  .logout-container { text-align: right; margin: 10px 20px 20px 20px; }
+  .btn-logout { padding: 10px 20px; background-color: #dc3545; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
   .btn-logout:hover { background-color: #c82333; transform: scale(1.05); }
 
   .page-title { text-align: center; margin-bottom: 20px; color: #333; font-family: Arial, sans-serif; }
 
- 
   .table-container { width: 100%; overflow-x: auto; margin-bottom: 40px; }
   .applications-table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; }
   .applications-table thead { background: linear-gradient(to right, #4e73df, #1cc88a); color: #fff; }
@@ -107,31 +95,11 @@
   .status-badge.pending { background-color: #ffc107; color: #000; }
   .status-badge.rejected { background-color: #dc3545; }
 
-  .btn-approve { padding: 6px 12px; margin-right: 5px; background-color: #28a745; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+  .btn-approve, .btn-reject, .btn-delete { padding: 6px 12px; margin-right: 5px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+  .btn-approve { background-color: #28a745; color: #fff; }
   .btn-approve:hover { background-color: #218838; transform: scale(1.05); }
-  .btn-reject { padding: 6px 12px; background-color: #dc3545; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
-  .btn-reject:hover { background-color: #c82333; transform: scale(1.05); }
-  .btn-delete { padding: 6px 12px; background-color: #dc3545; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
-  .btn-delete:hover { background-color: #c82333; transform: scale(1.05); }
-
-  
-  .notices-container { max-width: 1000px; margin: 40px auto; background-color: #ffffff; padding: 25px; border-radius: 15px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-  .notices-header { text-align: center; margin-bottom: 30px; }
-  .notices-header h2 { font-size: 28px; color: #343a40; margin-bottom: 5px; }
-  .notices-header p { font-size: 15px; color: #6c757d; }
-  .btn-new-notification { display: inline-block; padding: 10px 25px; background-color: #28a745; color: #fff; font-weight: 600; border-radius: 6px; text-decoration: none; box-shadow: 0 3px 6px rgba(0,0,0,0.1); transition: all 0.2s ease; }
-  .btn-new-notification:hover { background-color: #218838; transform: translateY(-2px); }
-
-  .notifications-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-  .notification-card { padding: 15px; background: #fff9e6; border-left: 5px solid #ffc107; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: all 0.3s ease; }
-  .notification-card:hover { transform: translateY(-3px); }
-  .notice-title { font-size: 16px; color: #5c4000; margin-bottom: 8px; display: block; }
-  .notice-body { margin: 0 0 8px 0; font-size: 14px; color: #6b4f1d; }
-  .notice-date { color: #a67c00; font-size: 12px; display: block; margin-bottom: 10px; }
-  .notification-actions { margin-top: 5px; display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn-edit { padding: 5px 12px; background-color: #0d6efd; color: #fff; border-radius: 6px; text-decoration: none; font-size: 13px; transition: all 0.2s ease; }
-  .btn-edit:hover { background-color: #0b5ed7; }
-  .no-notices { text-align: center; color: #856404; font-size: 14px; margin-top: 20px; }
+  .btn-reject, .btn-delete { background-color: #dc3545; color: #fff; }
+  .btn-reject:hover, .btn-delete:hover { background-color: #c82333; transform: scale(1.05); }
 
   @media (max-width: 768px) {
     .applications-table, .applications-table thead, .applications-table tbody, .applications-table th, .applications-table td, .applications-table tr { display: block; }
