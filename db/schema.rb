@@ -55,15 +55,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_26_060024) do
     t.index ["student_id"], name: "index_results_on_student_id"
   end
 
-  create_table "students", force: :cascade do |t|
-    t.string "name"
-    t.string "phone_number"
-    t.date "dob"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "student_number"
-    t.index ["student_number"], name: "index_students_on_student_number", unique: true
-  end
 
 
 
