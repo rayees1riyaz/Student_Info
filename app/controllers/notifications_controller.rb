@@ -1,6 +1,6 @@
 class NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :edit, :update, :destroy]
-
+ before_action :authenticate_admin!
   def index
     @notifications = Notification.all.order(created_at: :desc)
   end
@@ -48,4 +48,10 @@ class NotificationsController < ApplicationController
         .merge(user_id: current_user.id)
 end
 
+private
+def authenticate_admin!
+  unless current_user&.admin?
+    redirect_to root_path, alert: "You must be an admin to access this section."
+  end
+end
 end
