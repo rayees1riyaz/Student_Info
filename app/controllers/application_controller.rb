@@ -5,6 +5,5 @@ class ApplicationController < ActionController::Base
   end
   def login?
     !!current_user
-    
   end
 end

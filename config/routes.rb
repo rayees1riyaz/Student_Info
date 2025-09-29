@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   resources :admissions, only: [:show] 
   resources :courses, only: [:show] 
   resources :results, only: [:show] 
-resources :notifications
+  resources :notifications
 
   get "up" => "rails/health#show", as: :rails_health_check
 end
