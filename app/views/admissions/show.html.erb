@@ -1,7 +1,7 @@
 <% if @admission.student %>
   <div style="max-width: 900px; margin: 50px auto; font-family: 'Arial', sans-serif; display: flex; flex-direction: column; gap: 30px;">
 
-    <!-- Student Details Card -->
+ 
     <div style="background: linear-gradient(135deg, #e0f7ff, #ffffff); padding: 30px 35px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease;"
          onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 18px 40px rgba(0,0,0,0.2)';"
          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.15)';">
@@ -16,7 +16,7 @@
       <p style="margin-bottom: 0;"><strong>Course ID:</strong> <span style="color:#343a40;"><%= @admission.course.id %></span></p>
     </div>
 
-    <!-- Admission Details Card -->
+ 
     <div style="background: linear-gradient(135deg, #fff4e6, #ffffff); padding: 30px 35px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0,0,0,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease;"
          onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 18px 40px rgba(0,0,0,0.2)';"
          onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.15)';">
@@ -30,7 +30,7 @@
       <p style="margin-bottom: 0;"><strong>Date of Joining:</strong> <span style="color:#343a40;"><%= @admission.date_of_joining.strftime("%d %b %Y") %></span></p>
     </div>
 
-    <!-- Back Button -->
+ 
     <div style="text-align: center; margin-top: 15px;">
   <% path = current_user ? index_path : root_path %>
   <%= link_to "⬅ Back to Home Page", path,
